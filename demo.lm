@@ -4,11 +4,13 @@
  (sym emsp)
  (link #difference Differences)
  (sym lambda)
- (link #support Supported HTML) 
+ (link #support Supported HTML)
 
- (p So far, LispMark is a mostly complete language.)
+ (p LispMark is a mostly complete, public domain\ (sym copy) language.)
  (p It can already handle many HTML
-     tags, and will soon support user-definable macros.) 
+     tags, and will soon support user-definable macros.)
+ (p The special characters (tt ["\(", "\)", " "]) are
+    (tt \\ ) escapable. (tt \\\\ ) escapes (tt \\ ).)
  (anc difference) (h2 (link #view #) Differences)
  (p Unlike Markdown, LispMark (sym hellip)
   (ul
@@ -22,8 +24,8 @@
      LispMark will intend to generally replace human
      writing of HTML.)
  (h2 (anc support) (link #view #) Supported HTML)
- (p Lispmark currently supports the following tags: (p)
-  (table
+ (p Lispmark currently supports the following tags: 
+  (p) (table
     (tr (th Tag name) (th Meaning))  
     (tr (td \(b text\)) (td (b Bold)))
     (tr (td \(i text\)) (td (i Italics)))

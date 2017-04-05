@@ -30,7 +30,13 @@ for tag in single:
 
 arg1["sp"] = "<span class='spoiler'>{0}</span>"
 arg1["q"] = "<blockquote>{0}</blockquote>"
-    
+
+def css_spoiler():
+    print("""<style>\n.spoiler {
+  color: #000; background-color: #000;
+}\n.spoiler:hover {
+  color:#fff;\n}\n</style>""")
+
 def tokenize(inp=""): # Thanks Peter Norvig, lis.py
     return inp.replace('(', ' ( ').replace(')', ' ) ').split()
 
@@ -81,49 +87,13 @@ def parse_list(inp=[]):
 
 
 def eval_input(inp=""):
-    return parse_list(split_functions(inp))
+    return parse_list(split_functions(inp))\
+        .replace("\\\\", "&#92;").replace('\ ', '')
 
 def do_sym(inp):
     if inp in entity:
         return f"&{inp};"
     return f"&amp;{inp};"
-
-my_page = """
-(p 
- (b Welcome to my page)
- (hr (link . Here) / (link .. Up) / (link / Top) (hr))
- (p This is the page.)
- (p It's a document composed in (i Lispmark,)
-    with (b HTML-like) tag names.)
-
- (p It currently supports:)
- (ul
-  (li Basic formatting 
-    (ul 
-      (li (sym hellip) like (b bold,) (i italics,) (u underline))
-      (li (sym hellip) (sup superscript,) (sub subscript))
-      (li (sym hellip) (code code,) (s strikethrough))
-    ))
-  (li List Processing)
-  (li Higher-arrity functions
-    (ul
-     (li Such as (link http://google.com/ links))
-     (li and (img rss.png) images)))
-  (li Special HTML symbols, such as (sym forall), (sym sum),
-      (sym frac14), (sym infin))
- )
- (p Work in development.)
- (q  bob (sup (sym lambda)))
-)
-"""
-
-def css_spoiler():
-    print("""<style>
-.spoiler {
-color: #000; background-color: #000;
-}
-.spoiler:hover {
-color:#fff}</style>""")
 
 def show_entity():
     print("<hr><table border='2' style='border-collapse:collapse'><tr>")
@@ -131,6 +101,3 @@ def show_entity():
         if not (n % 6):
             print("<tr>")
         print(f"<td>{e}<td>{do_sym(e)}")
-
-if __name__ == "__main__":
-    print(f"<pre>{my_page}</pre><hr>{eval_input(my_page)}")
