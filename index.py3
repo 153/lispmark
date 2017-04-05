@@ -27,5 +27,7 @@ def main():
             my = my.read().replace("\(", "&#40;").replace("\)", "&#41;")
     print("<hr><pre>" + my, "</pre><hr>")
     print(parse.eval_input(my))
-
+    print("<hr>")
+    print("<code>(" + ") (".join(parse.args) + ")</code><p>")
+    parse.show_entity()
 main()

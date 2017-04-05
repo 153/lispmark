@@ -2,24 +2,39 @@
  (h2 Example Lispmark Page)
  
  (sym emsp)
+ (link #inspiration Inspiration)
+ (sym lambda)
  (link #difference Differences)
  (sym lambda)
  (link #support Supported HTML)
 
- (p LispMark is a mostly complete, public domain\ (sym copy) language.)
+ (p LispMark is a mostly complete, public domain\ (sym trade)
+ language.)
  (p It can already handle many HTML
      tags, and will soon support user-definable macros.)
  (p The special characters (tt ["\(", "\)", " "]) are
     (tt \\ ) escapable. (tt \\\\ ) escapes (tt \\ ).)
- (anc difference) (h2 (link #view #) Differences)
+ (h2 (anc inspiration) (link #view #) Inspiration)
+ (p The inspirations for this project are plenty:
+  (ul
+  (li Sexpcode, for trying to replace BBcode with SEXPs,)
+  (li Arc, for trying to bring backend webdev into LISP,)
+  (li Lis.py, for illustrating a basic LISP in python,)
+  (li Curl, for trying to use list-based markup,)
+  (li Bach, for trying to do these in Python)
+  ))
+ (h2 (anc difference) (link #view #) Differences)
  (p Unlike Markdown, LispMark (sym hellip)
   (ul
-  (li is easily extendible) 
+  (li is easily extendible through macros) 
   (li permits normal usage of normal characters)
   (li has non-ambiguous syntax)
+  (li has few special characters)
   (li includes HTML <a> anchors out of the box)
   (li etc.)
   ))
+ (p Unlike BBcode, Lispmark's syntax is not mind-numbing,
+     and is comparatively abstract.)
  (p Unlike Sexpcode, targeted at replacing BBcode, 
      LispMark will intend to generally replace human
      writing of HTML.)
@@ -29,9 +44,12 @@
     (tr (th Tag name) (th Meaning))  
     (tr (td \(b text\)) (td (b Bold)))
     (tr (td \(i text\)) (td (i Italics)))
-    (tr (td \(sp text\)) (td (s Spoiler)))
+    (tr (td \(u text\)) (td (u Underline)))
+    (tr (td \(o text\)) (td (o Overline)))
+    (tr (td \(s text\)) (td (s Strikethrough)))
+    (tr (td \(sp text\)) (td (sp Spoiler)))
     (tr (td \(tt text\)) (td (tt Teletype)))
-    (tr (td \(q text\)) (td Blockquote))
+    (tr (td \(q text\)) (td Quotes text))
     (tr (td \(img src [title]\)) (td Creates an image with
     	    optional title.))
     (tr (td \(url href\)) (td Creates a transparent link.))

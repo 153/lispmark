@@ -10,15 +10,16 @@ entity = ["quot", "amp", "lt", "gt", "le", "ge", "hellip",
           "forall", "empty", "isin", "notin", "sum",
           "radic", "infin", "there4", "oplus", "otimes",
           "cong", "asymp", "equiv",
-          "aelig", "THORN", "szlig", ]
+          "aelig", "THORN", "szlig" ]
 single = ["br", "hr", "p"]
 wrap = ["b", "i", "u", "o", "s", "code",
-        "tt", "spoiler", "sup", "sub",
+        "tt", "sup", "sub", "div", "span",
         "blockquote", "h1", "h2", "h3",
         "ul", "ol", "li", "table", "tr",
         "td", "th"]
 arg1 = {"url":"<a href='{0}'>{0}</a>",
-        "anc":"<a name='{0}'></a>"
+        "anc":"<a name='{0}'></a>",
+        "m":"<pre><code>{0}</code></pre>"
 }
 arg2 = {"link":"<a href='{0}'>{1}</a>",
         "img":"<img src='{0}' title='{1}'></img>"
@@ -31,11 +32,16 @@ for tag in single:
 arg1["sp"] = "<span class='spoiler'>{0}</span>"
 arg1["q"] = "<blockquote>{0}</blockquote>"
 
+args = [i for i in arg1.keys()]
+x = [args.append(i) for i in arg2.keys()]
+
 def css_spoiler():
     print("""<style>\n.spoiler {
   color: #000; background-color: #000;
 }\n.spoiler:hover {
-  color:#fff;\n}\n</style>""")
+  color:#fff;\n}\ntable {
+border-collapse: collapse;\n}\ntd, th {padding:2px;
+border: 2px solid black;\n}\n</style>""")
 
 def tokenize(inp=""): # Thanks Peter Norvig, lis.py
     return inp.replace('(', ' ( ').replace(')', ' ) ').split()
@@ -85,7 +91,6 @@ def parse_list(inp=[]):
             parsed.append(i)
     return markup_strings(parsed)
 
-
 def eval_input(inp=""):
     return parse_list(split_functions(inp))\
         .replace("\\\\", "&#92;").replace('\ ', '')
@@ -96,8 +101,9 @@ def do_sym(inp):
     return f"&amp;{inp};"
 
 def show_entity():
-    print("<hr><table border='2' style='border-collapse:collapse'><tr>")
+    print("<table><tr>")
     for n, e in enumerate(entity):
-        if not (n % 6):
+        if not (n % 8):
             print("<tr>")
         print(f"<td>{e}<td>{do_sym(e)}")
+    print("</table>")
