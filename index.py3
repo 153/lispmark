@@ -4,7 +4,7 @@ import parse
 
 def get_inp():
     print(wt.new_form())
-    print("<textarea name='my' cols=40 rows=6>" + wt.get_form('my'),
+    print("<textarea name='my' cols=70 rows=8>" + wt.get_form('my'),
           "</textarea>")
     print("<p>", wt.put_form('submit', '', 'Submit'))
 
@@ -22,6 +22,9 @@ def main():
 </pre>""")
     get_inp()
     my = wt.get_form("my").replace("\(", "&#40;").replace("\)", "&#41;")
+    if not my:
+        with open('demo.lm', 'r') as my:
+            my = my.read().replace("\(", "&#40;").replace("\)", "&#41;")
     print("<hr><pre>" + my, "</pre><hr>")
     print(parse.eval_input(my))
 

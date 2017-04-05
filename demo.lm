@@ -1,0 +1,39 @@
+(p (anc view)
+ (h2 Example Lispmark Page)
+ 
+ (sym emsp)
+ (link #difference Differences)
+ (sym lambda)
+ (link #support Supported HTML) 
+
+ (p So far, LispMark is a mostly complete language.)
+ (p It can already handle many HTML
+     tags, and will soon support user-definable macros.) 
+ (anc difference) (h2 (link #view #) Differences)
+ (p Unlike Markdown, LispMark (sym hellip)
+  (ul
+  (li is easily extendible) 
+  (li permits normal usage of normal characters)
+  (li has non-ambiguous syntax)
+  (li includes HTML <a> anchors out of the box)
+  (li etc.)
+  ))
+ (p Unlike Sexpcode, targeted at replacing BBcode, 
+     LispMark will intend to generally replace human
+     writing of HTML.)
+ (h2 (anc support) (link #view #) Supported HTML)
+ (p Lispmark currently supports the following tags: (p)
+  (table
+    (tr (th Tag name) (th Meaning))  
+    (tr (td \(b text\)) (td (b Bold)))
+    (tr (td \(i text\)) (td (i Italics)))
+    (tr (td \(sp text\)) (td (s Spoiler)))
+    (tr (td \(tt text\)) (td (tt Teletype)))
+    (tr (td \(q text\)) (td Blockquote))
+    (tr (td \(img src [title]\)) (td Creates an image with
+    	    optional title.))
+    (tr (td \(url href\)) (td Creates a transparent link.))
+    (tr (td \(link href [text]\)) (td Creates hyperlink with
+    	    optional title))
+))
+) 
