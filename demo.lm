@@ -1,4 +1,8 @@
 (p (anc view)
+ (def ib (i (b {0})))
+ (def thumb 
+   (link {0} (img {0} {1}) (br) {1} (br) (br)))
+ (def title (h2 (anc {0}) (link #view #) {1}))
  (h2 Example Lispmark Page)
  
  (sym emsp)
@@ -6,7 +10,8 @@
  (sym lambda)
  (link #difference Differences)
  (sym lambda)
- (link #support Supported HTML)
+ (link #support Supported HTML) 
+ (br (sym emsp) (link #composing Composing functions))
 
  (p LispMark is a mostly complete, public domain\ (sym trade)
  language.)
@@ -14,7 +19,7 @@
      tags, and will soon support user-definable macros.)
  (p The special characters (tt ["\(", "\)", " "]) are
     (tt \\ ) escapable. (tt \\\\ ) escapes (tt \\ ).)
- (h2 (anc inspiration) (link #view #) Inspiration)
+ (title inspiration Inspiration)
  (p The inspirations for this project are plenty:
   (ul
   (li Sexpcode, for trying to replace BBcode with SEXPs,)
@@ -23,7 +28,7 @@
   (li Curl, for trying to use list-based markup,)
   (li Bach, for trying to do these in Python)
   ))
- (h2 (anc difference) (link #view #) Differences)
+ (title difference Differences)
  (p Unlike Markdown, LispMark (sym hellip)
   (ul
   (li is easily extendible through macros) 
@@ -38,7 +43,7 @@
  (p Unlike Sexpcode, targeted at replacing BBcode, 
      LispMark will intend to generally replace human
      writing of HTML.)
- (h2 (anc support) (link #view #) Supported HTML)
+ (title support Supported HTML)
  (p Lispmark currently supports the following tags: 
   (p) (table
     (tr (th Tag name) (th Meaning))  
@@ -56,4 +61,22 @@
     (tr (td \(link href [text]\)) (td Creates hyperlink with
     	    optional title))
 ))
+ (title composing Composing functions)
+ (p Composing a new function can be done like so:
+  (m \(def title \(h2 \(anc {0}\) \(link #view #\) {1}\)\))
+  By making use of the (tt \(def\)) tag, users then specify
+  a LispMark template which can make use of the placeholder
+  symbols (tt {0}) and (tt {1}.))
+ (p The first argument of the (tt \(def\)) command is the name of
+    the new command, while the other contains the template for
+    outputted text.)
+ (p We can define a "thumbnail" function like this:
+  (m  \(def thumb (br)
+   \(link {0} \(img {0} {1}\) \(br\) {1} \(br\) \(br\)\))
+   ... where we use \(thumb\) to embed the image location given
+   as the first argument, followed by the text given as the second
+   argument, where both the image and text link to the original image.)
+  (m  \(thumb /cgit/cgit.png cgit logo\))
+   (thumb /cgit/cgit.png cgit logo)
+    
 ) 

@@ -24,6 +24,9 @@ arg1 = {"url":"<a href='{0}'>{0}</a>",
 arg2 = {"link":"<a href='{0}'>{1}</a>",
         "img":"<img src='{0}' title='{1}'></img>"
 }
+
+arg3 = {}
+
 for tag in wrap:
     arg1[tag] = str("<" + tag + ">{" + "0}</" + tag + ">")
 for tag in single:
@@ -46,7 +49,7 @@ border: 2px solid black;\n}\n</style>""")
 def tokenize(inp=""): # Thanks Peter Norvig, lis.py
     return inp.replace('(', ' ( ').replace(')', ' ) ').split()
 
-def make_list(tokens):
+def make_list(tokens): # Thanks Peter Norvig, lis.py
     token = tokens.pop(0)
     if '(' == token:
         tmp = []
@@ -69,18 +72,21 @@ def markup_strings(inp=""):
         return f"<{inp[0]}>"
     if inp[0] == "sym":
         return do_sym(inp[1])
+    elif inp[0] == "def":
+        return do_def(inp[1:])
+    if len(inp) < 2:
+        inp.append(inp[0])
     if inp[0] in arg1.keys():
         inp[1] = " ".join(inp[1:])
-    elif len(inp) > 3:
-        inp[2] = " ".join(inp[2:])
-    elif len(inp) < 3:
-        inp.append(inp[1])
-
-    if inp[0] in arg1:
         return arg1[inp[0]].format(inp[1])
-    elif inp[0] in arg2:
+    elif inp[0] in arg2.keys():
+        if len(inp) > 3:
+            inp[2] = " ".join(inp[2:])
+        elif len(inp) < 3:
+            inp.append(inp[1])
         return arg2[inp[0]].format(inp[1], inp[2])
-    return f"<{inp[0]}>{inp[1]}</{inp[0]}>"
+    return "{" + " ".join(inp) + "}"
+#    return f"<{inp[0]}>{inp[1]}</{inp[0]}>"
 
 def parse_list(inp=[]):
     parsed =[]
@@ -99,6 +105,27 @@ def do_sym(inp):
     if inp in entity:
         return f"&{inp};"
     return f"&amp;{inp};"
+
+def do_def(inp=[]):
+    # (def bi <b><i>{0}</i></b>)
+    # (def ib (i (b {0})))
+    inp = [i.replace('&gt;', ">").replace('&lt;', "<") \
+           for i in inp]
+    if len(inp) < 2:
+        return None
+    elif len(inp) > 2:
+        inp[1] = " ".join(inp[1:])
+    if inp[0] in args:
+        return " "
+    if "{2}" in inp[1]:
+        arg3[inp[0]] = inp[1]
+    if "{1}" in inp[1]:
+        arg2[inp[0]] = inp[1]
+    elif "{0}" in inp[1]:
+        arg1[inp[0]] = inp[1]
+    else:
+        single.append(inp[0])
+    return ' '
 
 def show_entity():
     print("<table><tr>")

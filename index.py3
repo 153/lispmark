@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import webtools as wt
+import cgitb
 import parse
+
+cgitb.enable()
 
 def get_inp():
     print(wt.new_form())
@@ -10,6 +13,7 @@ def get_inp():
 
 def main():
     print(wt.head())
+    print("<body style='max-width: 500px;'>")
     parse.css_spoiler()
     print("""<pre>
     tags available: b, i, u, o, s, code, tt,
