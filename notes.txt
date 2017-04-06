@@ -1,5 +1,0 @@
-To add:
-* (b .class #id text) => "<b class='class' id='id'>text</b>"
-* (macro boldita b i) -> (boldita text) -> (b (i text)
-* (def html "<html>\0</html>") -> (html hi) => "<html>hi</html>"
-* (link http://boards.4chan.org/po/) => "<a ...>boards.4chan.org</a>"
