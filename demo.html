@@ -1,0 +1,161 @@
+<body style='max-width: 500px;'>
+<style>
+.spoiler {
+  color: #000; background-color: #000;
+}
+.spoiler:hover {
+  color:#fff;
+}
+table {
+border-collapse: collapse;
+}
+td, th {padding:2px;
+border: 2px solid black;
+}
+</style>
+
+<pre>(p (anc view)
+ (def ib (i (b {0})))
+ (def thumb 
+   (link {0} (img {0} {1}) (br) {1} (br) (br)))
+ (def title (h2 (anc {0}) (link #view #) {1}))
+ (h2 Example Lispmark Page)
+ 
+ (sym emsp)
+ (link #inspiration Inspiration)
+ (sym lambda)
+ (link #difference Differences)
+ (sym lambda)
+ (link #support Supported HTML) 
+ (br (sym emsp) (link #composing Composing functions))
+
+ (p LispMark is a mostly complete, public domain\ (sym trade)
+ language.)
+ (p It can already handle many HTML
+     tags, and will soon support user-definable macros.)
+ (p The special characters (tt ["&#40;", "&#41;", " "]) are
+    (tt \\ ) escapable. (tt \\\\ ) escapes (tt \\ ).)
+ (title inspiration Inspiration)
+ (p The inspirations for this project are plenty:
+  (ul
+  (li Sexpcode, for trying to replace BBcode with SEXPs,)
+  (li Arc, for trying to bring backend webdev into LISP,)
+  (li Lis.py, for illustrating a basic LISP in python,)
+  (li Curl, for trying to use list-based markup,)
+  (li Bach, for trying to do these in Python)
+  ))
+ (title difference Differences)
+ (p Unlike Markdown, LispMark (sym hellip)
+  (ul
+  (li is easily extendible through macros) 
+  (li permits normal usage of normal characters)
+  (li has non-ambiguous syntax)
+  (li has few special characters)
+  (li includes HTML <a> anchors out of the box)
+  (li etc.)
+  ))
+ (p Unlike BBcode, Lispmark's syntax is not mind-numbing,
+     and is comparatively abstract.)
+ (p Unlike Sexpcode, targeted at replacing BBcode, 
+     LispMark will intend to generally replace human
+     writing of HTML.)
+ (title support Supported HTML)
+ (p Lispmark currently supports the following tags: 
+  (p) (table
+    (tr (th Tag name) (th Meaning))  
+    (tr (td &#40;b text&#41;) (td (b Bold)))
+    (tr (td &#40;i text&#41;) (td (i Italics)))
+    (tr (td &#40;u text&#41;) (td (u Underline)))
+    (tr (td &#40;o text&#41;) (td (o Overline)))
+    (tr (td &#40;s text&#41;) (td (s Strikethrough)))
+    (tr (td &#40;sp text&#41;) (td (sp Spoiler)))
+    (tr (td &#40;tt text&#41;) (td (tt Teletype)))
+    (tr (td &#40;q text&#41;) (td Quotes text))
+    (tr (td &#40;img src [title]&#41;) (td Creates an image with
+    	    optional title.))
+    (tr (td &#40;url href&#41;) (td Creates a transparent link.))
+    (tr (td &#40;link href [text]&#41;) (td Creates hyperlink with
+    	    optional title))
+))
+ (title composing Composing functions)
+ (p Composing a new function can be done like so:
+  (m &#40;def title &#40;h2 &#40;anc {0}&#41; &#40;link #view #&#41; {1}&#41;&#41;)
+  By making use of the (tt &#40;def&#41;) tag, users then specify
+  a LispMark template which can make use of the placeholder
+  symbols (tt {0}) and (tt {1}.))
+ (p The first argument of the (tt &#40;def&#41;) command is the name of
+    the new command, while the other contains the template for
+    outputted text.)
+ (p We can define a "thumbnail" function like this:
+  (m  &#40;def thumb (br)
+   &#40;link {0} &#40;img {0} {1}&#41; &#40;br&#41; {1} &#40;br&#41; &#40;br&#41;&#41;)
+   ... where we use &#40;thumb&#41; to embed the image location given
+   as the first argument, followed by the text given as the second
+   argument, where both the image and text link to the original image.)
+  (m  &#40;thumb /cgit/cgit.png cgit logo&#41;)
+   (thumb /cgit/cgit.png cgit logo)
+    
+)  </pre><hr>
+<p><a name='view'></a>       <h2>Example Lispmark Page</h2> &emsp; <a href='#inspiration'>Inspiration</a> &lambda; <a href='#difference'>Differences</a> &lambda; <a href='#support'>Supported HTML</a> <br>&emsp; <a href='#composing'>Composing functions</a> <p>LispMark is a mostly complete, public domain&trade; language. <p>It can already handle many HTML tags, and will soon support user-definable macros. <p>The special characters <tt>["&#40;", "&#41;", " "]</tt> are <tt>&#92;</tt> escapable. <tt>&#92;&#92;</tt> escapes <tt>&#92;</tt> . <h2><a name='inspiration'></a> <a href='#view'>#</a> Inspiration</h2> <p>The inspirations for this project are plenty: <ul><li>Sexpcode, for trying to replace BBcode with SEXPs,</li> <li>Arc, for trying to bring backend webdev into LISP,</li> <li>Lis.py, for illustrating a basic LISP in python,</li> <li>Curl, for trying to use list-based markup,</li> <li>Bach, for trying to do these in Python</li></ul> <h2><a name='difference'></a> <a href='#view'>#</a> Differences</h2> <p>Unlike Markdown, LispMark &hellip; <ul><li>is easily extendible through macros</li> <li>permits normal usage of normal characters</li> <li>has non-ambiguous syntax</li> <li>has few special characters</li> <li>includes HTML <a> anchors out of the box</li> <li>etc.</li></ul> <p>Unlike BBcode, Lispmark's syntax is not mind-numbing, and is comparatively abstract. <p>Unlike Sexpcode, targeted at replacing BBcode, LispMark will intend to generally replace human writing of HTML. <h2><a name='support'></a> <a href='#view'>#</a> Supported HTML</h2> <p>Lispmark currently supports the following tags: <p> <table><tr><th>Tag name</th> <th>Meaning</th></tr> <tr><td>&#40;b text&#41;</td> <td><b>Bold</b></td></tr> <tr><td>&#40;i text&#41;</td> <td><i>Italics</i></td></tr> <tr><td>&#40;u text&#41;</td> <td><u>Underline</u></td></tr> <tr><td>&#40;o text&#41;</td> <td><o>Overline</o></td></tr> <tr><td>&#40;s text&#41;</td> <td><s>Strikethrough</s></td></tr> <tr><td>&#40;sp text&#41;</td> <td><span class='spoiler'>Spoiler</span></td></tr> <tr><td>&#40;tt text&#41;</td> <td><tt>Teletype</tt></td></tr> <tr><td>&#40;q text&#41;</td> <td>Quotes text</td></tr> <tr><td>&#40;img src [title]&#41;</td> <td>Creates an image with optional title.</td></tr> <tr><td>&#40;url href&#41;</td> <td>Creates a transparent link.</td></tr> <tr><td>&#40;link href [text]&#41;</td> <td>Creates hyperlink with optional title</td></tr></table> <h2><a name='composing'></a> <a href='#view'>#</a> Composing functions</h2> <p>Composing a new function can be done like so: <pre><code>&#40;def title &#40;h2 &#40;anc {0}&#41; &#40;link #view #&#41; {1}&#41;&#41;</code></pre> By making use of the <tt>&#40;def&#41;</tt> tag, users then specify a LispMark template which can make use of the placeholder symbols <tt>{0}</tt> and <tt>{1}.</tt> <p>The first argument of the <tt>&#40;def&#41;</tt> command is the name of the new command, while the other contains the template for outputted text. <p>We can define a "thumbnail" function like this: <pre><code>&#40;def thumb <br> &#40;link {0} &#40;img {0} {1}&#41; &#40;br&#41; {1} &#40;br&#41; &#40;br&#41;&#41;</code></pre> ... where we use &#40;thumb&#41; to embed the image location given as the first argument, followed by the text given as the second argument, where both the image and text link to the original image. <pre><code>&#40;thumb /cgit/cgit.png cgit logo&#41;</code></pre> <a href='/cgit/cgit.png'><img src='/cgit/cgit.png' title='cgit logo'></img> <br> cgit logo <br> <br></a>
+<hr>
+<code>(url) (anc) (m) (b) (i) (u) (o) (s) (code) (tt) (sup) (sub) (div) (span) (blockquote) (h1) (h2) (h3) (ul) (ol) (li) (table) (tr) (td) (th) (br) (hr) (p) (sp) (q) (link) (img)</code><p>
+<table><tr>
+<tr>
+<td>quot<td>&quot;
+<td>amp<td>&amp;
+<td>lt<td>&lt;
+<td>gt<td>&gt;
+<td>le<td>&le;
+<td>ge<td>&ge;
+<td>hellip<td>&hellip;
+<td>nbsp<td>&nbsp;
+<tr>
+<td>ensp<td>&ensp;
+<td>emsp<td>&emsp;
+<td>ndash<td>&ndash;
+<td>mdash<td>&mdash;
+<td>hearts<td>&hearts;
+<td>diams<td>&diams;
+<td>clubs<td>&clubs;
+<td>spades<td>&spades;
+<tr>
+<td>loz<td>&loz;
+<td>cent<td>&cent;
+<td>pound<td>&pound;
+<td>yen<td>&yen;
+<td>euro<td>&euro;
+<td>copy<td>&copy;
+<td>reg<td>&reg;
+<td>trade<td>&trade;
+<tr>
+<td>para<td>&para;
+<td>sect<td>&sect;
+<td>dagger<td>&dagger;
+<td>frac14<td>&frac14;
+<td>frac12<td>&frac12;
+<td>frac34<td>&frac34;
+<td>micro<td>&micro;
+<td>lambda<td>&lambda;
+<tr>
+<td>divide<td>&divide;
+<td>times<td>&times;
+<td>fnof<td>&fnof;
+<td>forall<td>&forall;
+<td>empty<td>&empty;
+<td>isin<td>&isin;
+<td>notin<td>&notin;
+<td>sum<td>&sum;
+<tr>
+<td>radic<td>&radic;
+<td>infin<td>&infin;
+<td>there4<td>&there4;
+<td>oplus<td>&oplus;
+<td>otimes<td>&otimes;
+<td>cong<td>&cong;
+<td>asymp<td>&asymp;
+<td>equiv<td>&equiv;
+<tr>
+<td>aelig<td>&aelig;
+<td>THORN<td>&THORN;
+<td>szlig<td>&szlig;
+</table>
