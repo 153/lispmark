@@ -14,8 +14,4 @@ Very alpha
 
 * tags are ( parenthetically wrapped)
 * parse.py handles parsing 
-* parse.eval_input() takes a string like "(p my input)" (wrap all text in single bracket)
-* make sure to wrap parse.eval_input("") in parens ( ) 
-
-
-View demo.lm and demo.html to see an example
+* parse.eval_input() takes a string like "(p my input)" wrap all text in parens ( )
