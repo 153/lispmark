@@ -1,4 +1,7 @@
 #/usr/bin/env python3
+# usage: import parse; parse.eval_input("(my input)")
+# be sane and wrap your parse.eval_input with ( )
+# 2018.03.22
 
 entity = ["quot", "amp", "lt", "gt", "le", "ge", "hellip",
           "nbsp", "ensp", "emsp", "ndash", "mdash",
@@ -10,41 +13,60 @@ entity = ["quot", "amp", "lt", "gt", "le", "ge", "hellip",
           "forall", "empty", "isin", "notin", "sum",
           "radic", "infin", "there4", "oplus", "otimes",
           "cong", "asymp", "equiv",
-          "aelig", "THORN", "szlig" ]
+          "aelig", "THORN", "szlig",
+          "uarr", "larr", "rarr", "darr"]
 single = ["br", "hr", "p"]
 wrap = ["b", "i", "u", "o", "s", "code",
         "tt", "sup", "sub", "div", "span",
-        "blockquote", "h1", "h2", "h3",
-        "ul", "ol", "li", "table", "tr",
-        "td", "th"]
+        "blockquote", "h1", "h2", "h3", "h4",
+        "ul", "ol", "li",
+        "table", "tr", "td", "th"]
 arg1 = {"url":"<a href='{0}'>{0}</a>",
         "anc":"<a name='{0}'></a>",
-        "m":"<pre><code>{0}</code></pre>"
-}
+        "m":"<pre><code>{0}</code></pre>",
+        "q": "<blockquote>{0}</blockquote>",
+        "sp": "<span class='spoiler'>{0}</span>",
+        "/": "&lpar;{0}&rpar;",
+        "'": "{0}"}
 arg2 = {"link":"<a href='{0}'>{1}</a>",
-        "img":"<img src='{0}' title='{1}'></img>"
-}
-
+        "img":"<img src='{0}' title='{1}'></img>"}
 arg3 = {}
 
-for tag in wrap:
-    arg1[tag] = str("<" + tag + ">{" + "0}</" + tag + ">")
 for tag in single:
     arg1[tag] = str("<" + tag + ">{" + "0}")
+for tag in wrap:
+    arg1[tag] = str("<" + tag + ">{" + "0}</" + tag + ">")
 
-arg1["sp"] = "<span class='spoiler'>{0}</span>"
-arg1["q"] = "<blockquote>{0}</blockquote>"
 
 args = [i for i in arg1.keys()]
 x = [args.append(i) for i in arg2.keys()]
 
+# We call eval_input(input) which calls a
+# parse_list() on split_functions(input).
+#
+# split_functions(input) returns
+#     a make_list() of tokenize(input).
+# tokenize(input) replaces ( and ) with " ( " and " ) "
+#     after adding the contents of parens to list.
+# make_list(tokens) adds to contents of (parens) to a list.
+# parse_list() ensures that each item in the make_list is ran
+#     through markup_strings(parsed) from the inside-out.
+#
+# markup_strings(input) sends a list through the (sym) symbol
+#     dictionary, runs input through the (def) define macro,
+#     tries to run items through (,) the map function,
+#      runs inp[0] through arg1 if it's in arg1,
+#      returning arg1[inp[0]].format(inp[1])
+#      or runs inp[0] through arg2 if it's in arg2,
+#      returning arg2[inp[0]] formatting inp[1] and inp[2],
+#     otherwise returning (text in parens). 
+# css_spoiler()  makes sure that spoilers work 
+
 def css_spoiler():
-    print("""<style>\n.spoiler {
-  color: #000; background-color: #000;
+    print("""<style>\n
+.spoiler {color: #000; background-color: #000;
 }\n.spoiler:hover {
-  color:#fff;\n}\ntable {
-border-collapse: collapse;\n}\ntd, th {padding:2px;
-border: 2px solid black;\n}\n</style>""")
+color:#fff;\n}</style>""")
 
 def tokenize(inp=""): # Thanks Peter Norvig, lis.py
     return inp.replace('(', ' ( ').replace(')', ' ) ').split()
@@ -70,6 +92,11 @@ def markup_strings(inp=""):
         inp = inp[0].split(" ")
     if len(inp) < 2 and inp[0] in single:
         return f"<{inp[0]}>"
+    if inp[0] == ",":
+        newlist = [] # real hacky shit, currently only accepts 1 field 
+        for i in inp[2:]:
+            newlist.append(inp[1].format(i))
+        return " ".join(newlist)
     if inp[0] == "sym":
         return do_sym(inp[1])
     elif inp[0] == "def":
@@ -85,8 +112,7 @@ def markup_strings(inp=""):
         elif len(inp) < 3:
             inp.append(inp[1])
         return arg2[inp[0]].format(inp[1], inp[2])
-    return "{" + " ".join(inp) + "}"
-#    return f"<{inp[0]}>{inp[1]}</{inp[0]}>"
+    return "&lpar;" + " ".join(inp) + "&rpar;"
 
 def parse_list(inp=[]):
     parsed =[]
@@ -107,8 +133,6 @@ def do_sym(inp):
     return f"&amp;{inp};"
 
 def do_def(inp=[]):
-    # (def bi <b><i>{0}</i></b>)
-    # (def ib (i (b {0})))
     inp = [i.replace('&gt;', ">").replace('&lt;', "<") \
            for i in inp]
     if len(inp) < 2:
@@ -119,7 +143,7 @@ def do_def(inp=[]):
         return " "
     if "{2}" in inp[1]:
         arg3[inp[0]] = inp[1]
-    if "{1}" in inp[1]:
+    elif "{1}" in inp[1]:
         arg2[inp[0]] = inp[1]
     elif "{0}" in inp[1]:
         arg1[inp[0]] = inp[1]
