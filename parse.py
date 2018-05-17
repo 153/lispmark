@@ -20,6 +20,7 @@ wrap = ["b", "i", "u", "o", "s", "code",
         "tt", "sup", "sub", "div", "span",
         "blockquote", "h1", "h2", "h3", "h4",
         "ul", "ol", "li",
+        "html", "body", "head"
         "table", "tr", "td", "th"]
 arg1 = {"url":"<a href='{0}'>{0}</a>",
         "anc":"<a name='{0}'></a>",
