@@ -26,11 +26,11 @@ arg1 = {"url":"<a href='{0}'>{0}</a>",
         "anc":"<a name='{0}'></a>",
         "m":"<pre><code>{0}</code></pre>",
         "q": "<blockquote>{0}</blockquote>",
-        "style": "<link rel='stylesheet' type='text/css' href='{0}'>"
+        "style": "<link rel='stylesheet' type='text/css' href='{0}'>",
         "sp": "<span class='spoiler'>{0}</span>",
         "/": "&lpar;{0}&rpar;",
         "'": "{0}",
-        "!": "<!-- {0} -->}
+        "!": "<!-- {0} -->"}
 arg2 = {"link":"<a href='{0}'>{1}</a>",
         "img":"<img src='{0}' title='{1}'></img>"}
 arg3 = {}
